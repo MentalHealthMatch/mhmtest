@@ -8,9 +8,26 @@ router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
 
-router.get("/listAllUsers", processAllUsers);
 
-router.get("/listallclasses", listallclasses);
+
+router.get('/listallusers', async (req, res) => {
+  try {
+   const books = await database.getUsers();
+   res.json(books);
+  } catch (err) {
+   res.json({ error: err.message || err.toString() });
+  }
+ });
+
+
+ router.get('/listallclasses', async (req, res) => {
+  try {
+   const classes = await database.getAllClasses();
+   res.json(classes);
+  } catch (err) {
+   res.json({ error: err.message || err.toString() });
+  }
+ });
 
 module.exports = router;
 
@@ -36,6 +53,4 @@ function createLastNameLookup(array) {
   return returnValue;
 }
 
-async function listallclasses(req, res) {
-  res.json(databaseAccess.getAllClasses());
-}
+
