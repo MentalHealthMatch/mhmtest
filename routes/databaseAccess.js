@@ -3,8 +3,22 @@
 
 //NOTE:  Please leave these methods async.
 
-async function getUsers() {
-  await whatIsThisDoing(200);
+async function concatNames(firstNames, lastNames) {
+  let nameArray = [];
+
+  firstNames.forEach(n => {
+    let fullName = n.name;
+    let lName = lastNames.find(lName => lName.id == n.id);
+    if(lName != undefined && lName.last) {
+      fullName.concat(' ', lName.last)
+    }
+    listOfNames.push(fullName)
+  })
+
+  return nameArray;
+}
+
+async function getFirstNames() {
   return [
     { name: "Jerry", id: 1 },
     { name: "Billy", id: 2 },
@@ -12,23 +26,23 @@ async function getUsers() {
 }
 
 async function getLastNames() {
-  await whatIsThisDoing(10);
   return [
     { id: 1, last: "Smitth" },
     { id: 2, last: "Jones" },
   ];
 }
 
-function whatIsThisDoing(ms) {
-  return new Promise((doSomething) => setTimeout(doSomething, ms));
+async function getUsers() {
+  const firstNames = await getFirstNames();
+  const lastNames = await getLastNames()
+  return await concatNames(firstNames, lastNames);
 }
 
-async function getAllClasses() {
-  await whatIsThisDoing(200);
+async function getClassesFromDatabase() {
   return [
     { name: "Trig", id: 1 },
     { name: "Calc", id: 2 },
   ];
 }
 
-module.exports = { getUsers, getLastNames, getAllClasses };
+module.exports = { getUsers, getLastNames, getClassesFromDatabase };
