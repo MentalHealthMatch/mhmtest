@@ -8,9 +8,9 @@ router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
 
-router.get("/listAllUsers", listAllUsers);
+router.get("/users", listAllUsers);
 
-router.get("/listallclasses", listallclasses);
+router.get("/classes", listallclasses);
 
 module.exports = router;
 
