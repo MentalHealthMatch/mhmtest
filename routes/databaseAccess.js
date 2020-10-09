@@ -6,16 +6,8 @@
 async function getUsers() {
   await whatIsThisDoing(200);
   return [
-    { name: "Jerry", id: 1 },
-    { name: "Billy", id: 2 },
-  ];
-}
-
-async function getLastNames() {
-  await whatIsThisDoing(10);
-  return [
-    { id: 1, last: "Smitth" },
-    { id: 2, last: "Jones" },
+    { name: "Jerry", last: "Smitth", id: 1 },
+    { name: "Billy", last: "Jones", id: 2 },
   ];
 }
 
@@ -31,4 +23,4 @@ async function getAllClasses() {
   ];
 }
 
-module.exports = { getUsers, getLastNames, getAllClasses };
+module.exports = { getUsers, getAllClasses };

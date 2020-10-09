@@ -8,32 +8,15 @@ router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
 
-router.get("/listAllUsers", processAllUsers);
+router.get("/listAllUsers", listAllUsers);
 
 router.get("/listallclasses", listallclasses);
 
 module.exports = router;
 
-async function processAllUsers(req, res) {
-  let stuff = await database.getUsers();
-  for (let i = 0; i < stuff.length; i++) {
-    const next = stuff[i];
-    let lastNames = await database.getLastNames();
-    const lastNameLookup = createLastNameLookup(lastNames);
-    const nextId = next.id;
-    const last = lastNameLookup[nextId];
-    next.last = last;
-  }
-  res.json(stuff);
-}
-
-function createLastNameLookup(array) {
-  const returnValue = {};
-  for (let i = 0; i < array.length; i++) {
-    const next = array[i];
-    returnValue[next.id] = next.last;
-  }
-  return returnValue;
+async function listAllUsers(req, res) {
+  let users = await database.getUsers();
+  res.json(users);
 }
 
 async function listallclasses(req, res) {
