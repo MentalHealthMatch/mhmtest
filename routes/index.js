@@ -20,5 +20,6 @@ async function listAllUsers(req, res) {
 }
 
 async function listallclasses(req, res) {
-  res.json(databaseAccess.getAllClasses());
+  const allClasses = await databaseAccess.getAllClasses();
+  res.json(allClasses);
 }
