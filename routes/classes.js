@@ -1,11 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var database = require("./databaseAccess");
 
-
-/* GET users listing. */
+/* GET classes listing. */
 router.get('/', function(req, res, next) {
-    res.render('users', { title: 'Users', users: req.val})
-  });
+  res.render('classes', { title: 'Classes', classes: req.val})
+});
 
 module.exports = router;

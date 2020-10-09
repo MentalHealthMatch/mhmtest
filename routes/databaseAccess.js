@@ -19,6 +19,7 @@ async function getLastNames() {
   ];
 }
 
+//similate latency when retrieving data
 function whatIsThisDoing(ms) {
   return new Promise((doSomething) => setTimeout(doSomething, ms));
 }
