@@ -45,5 +45,5 @@ async function listallclasses(req, res) {
   let classes = await database.getAllClasses();
   // res.json(databaseAccess.getAllClasses());
   res.render('listallclasses', { title: 'CLASESS', classlist: classes });
-  // res.end()
+  res.end()
 }
