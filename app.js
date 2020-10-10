@@ -7,7 +7,18 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+var stylus = require('stylus')
+var nib = require('nib')
+
 var app = express();
+
+function compile(str, path) {
+  return stylus(str)
+    .set('filename', path)
+    .use(nib())
+}
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -17,6 +28,11 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(stylus.middleware(
+  { src: __dirname + '/public'
+  , compile: compile
+  }
+))
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
@@ -37,5 +53,10 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+app.get('/', function (req, res) {
+  res.render('index',
+  { title : 'Home' }
+  )
+})
 
 module.exports = app;
