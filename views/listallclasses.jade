@@ -1,0 +1,18 @@
+extends layout
+
+block content
+ h1= title
+ link(rel='stylesheet', href='/stylesheets/style.css')
+ p All Classes
+ -var classeslist = classlist
+ div
+   table.table.table-hover
+    thead
+      tr
+       td Name
+       td ID
+    tbody
+      each clss in classlist
+        tr
+          td=clss.name
+          td=clss.id

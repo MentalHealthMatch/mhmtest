@@ -1,0 +1,20 @@
+extends layout
+
+block content
+ h1= title
+ link(rel='stylesheet', href='/stylesheets/style.css')
+ p All #{title}
+ -var userlist = users
+ div
+   table.table
+    thead
+      tr
+       td User
+       td Last
+       td ID
+    tbody
+      each user in users
+        tr
+          td=user.name
+          td=user.lastname
+          td=user.id
