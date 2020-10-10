@@ -5,37 +5,45 @@ var database = require("./databaseAccess");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.render("index", { title: "Express" });
+  res.render("index", { title: "MH Test", viewUsr:"/listAllUsers", viewClss:"/listallclasses" });
 });
 
-router.get("/listAllUsers", processAllUsers);
+router.get("/listAllUsers", getUsers);
 
 router.get("/listallclasses", listallclasses);
 
 module.exports = router;
 
-async function processAllUsers(req, res) {
-  let stuff = await database.getUsers();
-  for (let i = 0; i < stuff.length; i++) {
-    const next = stuff[i];
-    let lastNames = await database.getLastNames();
-    const lastNameLookup = createLastNameLookup(lastNames);
-    const nextId = next.id;
-    const last = lastNameLookup[nextId];
-    next.last = last;
-  }
-  res.json(stuff);
+async function getUsers(req, res) {
+  let userNames = await database.getUsers();
+  // for (let i = 0; i < userNames.length; i++) {
+  //   const userName = userNames[i];
+  //   let lastNames = await database.getLastNames();
+  //   const lastNameLookup = createLastNameLookup(lastNames);
+  //   const userNameId = userName.id;
+  //   const last = lastNameLookup[userNameId];
+  //   userName.last = last;
+  // }
+  // res.write(makeTableHTML(userNames))
+  res.render('listallusers', { title: 'USERS' , users: userNames });
+  // res.json(userNames);
+  res.end()
 }
+//
+// function createLastNameLookup(array) {
+//   const returnUserLastName = {};
+//   for (let i = 0; i < array.length; i++) {
+//     const userLastName = array[i];
+//     returnUserLastName[userLastName.id] = userLastName.last;
+//   }
+//   return returnUserLastName;
+// }
 
-function createLastNameLookup(array) {
-  const returnValue = {};
-  for (let i = 0; i < array.length; i++) {
-    const next = array[i];
-    returnValue[next.id] = next.last;
-  }
-  return returnValue;
-}
+
 
 async function listallclasses(req, res) {
-  res.json(databaseAccess.getAllClasses());
+  let classes = await database.getAllClasses();
+  // res.json(databaseAccess.getAllClasses());
+  res.render('listallclasses', { title: 'CLASESS', classlist: classes });
+  // res.end()
 }
