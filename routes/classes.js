@@ -1,11 +1,7 @@
-var express = require('express');
-var router = express.Router();
 const databaseAccess = require("./databaseAccess");
 
-router.get("/", listallclasses); 
-
 async function listallclasses(req, res) {
-    res.json(await databaseAccess.getAllClasses());
+    res.json(await databaseAccess.getAllClasses());                     //  this was easy fix it was missing out await 
 }
 
-module.exports = router;
+module.exports = { listallclasses };
