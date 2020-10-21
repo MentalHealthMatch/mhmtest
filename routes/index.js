@@ -13,21 +13,6 @@ router.get("/classes", processAllClasses);
 
 module.exports = router;
 
-// async function processAllUsers(req, res) {
-//   try {
-//     const firstNames = await database.getFirstNames();
-//     const lastNames = await database.getLastNames();
-//     const users = (firstNames, lastNames) => {
-//       let findPerson = (id) => lastNames.find((person) => person.id === id).lastName;
-//       return firstNames.forEach((person) => Object.assign(person, findPerson(person.id)));
-//     };
-//     console.log(users);
-//     res.json(users);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-
 async function processAllUsers(req, res) {
   try {
     let firstNames = await database.getFirstNames();
