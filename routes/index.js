@@ -1,41 +1,57 @@
 var express = require("express");
-const databaseAccess = require("./databaseAccess");
+const database = require("../data/databaseAccess");
 var router = express.Router();
-var database = require("./databaseAccess");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
-
-router.get("/listAllUsers", processAllUsers);
-
-router.get("/listallclasses", listallclasses);
+/* GET users. */
+router.get("/users", processAllUsers);
+/* GET classes. */
+router.get("/classes", processAllClasses);
 
 module.exports = router;
 
+// async function processAllUsers(req, res) {
+//   try {
+//     const firstNames = await database.getFirstNames();
+//     const lastNames = await database.getLastNames();
+//     const users = (firstNames, lastNames) => {
+//       let findPerson = (id) => lastNames.find((person) => person.id === id).lastName;
+//       return firstNames.forEach((person) => Object.assign(person, findPerson(person.id)));
+//     };
+//     console.log(users);
+//     res.json(users);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
 async function processAllUsers(req, res) {
-  let stuff = await database.getUsers();
-  for (let i = 0; i < stuff.length; i++) {
-    const next = stuff[i];
+  try {
+    let firstNames = await database.getFirstNames();
     let lastNames = await database.getLastNames();
-    const lastNameLookup = createLastNameLookup(lastNames);
-    const nextId = next.id;
-    const last = lastNameLookup[nextId];
-    next.last = last;
+    let users = [];
+
+    for(let i = 0; i < firstNames.length; i++) {
+      users.push({
+      ...firstNames[i],
+      ...(lastNames.find((person) => person.id === firstNames[i].id))}
+      );
+    }
+    res.json(users);
+
+  } catch (error) {
+    console.log(error);
   }
-  res.json(stuff);
 }
 
-function createLastNameLookup(array) {
-  const returnValue = {};
-  for (let i = 0; i < array.length; i++) {
-    const next = array[i];
-    returnValue[next.id] = next.last;
+async function processAllClasses(req, res) {
+  try {
+    let classes = await database.getAllClasses();
+    res.json(classes);
+  } catch (error) {
+    console.log(error);
   }
-  return returnValue;
-}
-
-async function listallclasses(req, res) {
-  res.json(databaseAccess.getAllClasses());
 }
