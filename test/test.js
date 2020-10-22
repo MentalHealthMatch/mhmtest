@@ -6,13 +6,13 @@ chai.use(chaiHttp);
 const fs = require('fs');
 
 const app = require('../app');
-const databaseAccess = require('../db/databaseAccess');
+const databaseAccess = require('../db/database-access');
 
 //Since we'll be modifying the "database",
 //this hook resets to seed values after execution
 afterEach(function() {
-  const seedData = fs.readFileSync(__dirname + '/seedData.json');
-  fs.writeFileSync(__dirname + '/../db/mockData.json', seedData);
+  const seedData = fs.readFileSync(__dirname + '/seed-data.json');
+  fs.writeFileSync(__dirname + '/../db/mock-data.json', seedData);
 });
 
 

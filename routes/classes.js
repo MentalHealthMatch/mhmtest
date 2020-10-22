@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const database = require("../db/databaseAccess");
+const database = require("../db/database-access");
 
 router.get('/', getClasses);
 router.get('/:id', getClass);

@@ -14,7 +14,7 @@ const util = require('util');
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
-const fileLocation = (__dirname + '/mockData.json');
+const fileLocation = (__dirname + '/mock-data.json');
 
 async function getUsers() {
   let data = JSON.parse(await readFile(fileLocation));
