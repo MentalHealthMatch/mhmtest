@@ -4,7 +4,7 @@
 const data = require('./mockData');
 
 async function getUsers() {
-  await latency(200);
+  await latency(20);
   return data.users;
 }
 
@@ -19,7 +19,7 @@ async function getUser(id) {
 }
 
 async function getClasses() {
-  await latency(200);
+  await latency(20);
   return data.classes;
 }
 

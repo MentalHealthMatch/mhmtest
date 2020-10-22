@@ -8,13 +8,25 @@ const app = require('../app');
 const databaseAccess = require('../db/databaseAccess');
 
 describe("API endpoints", function() {
-  describe("GET /listAllUsers", function() {
+  describe("GET /users", function() {
     it("should fetch all users", function(done) {
       chai.request(app)
-        .get("/listAllUsers")
+        .get("/users")
         .end((err, result) => {
           result.should.have.status(200);
           assert.equal(result.body.length, 2);
+          done();
+        });
+    });
+  });
+
+  describe("GET /users/:id", function() {
+    it("should fetch the requested user", function(done) {
+      chai.request(app)
+        .get("/users/1")
+        .end((err, result) => {
+          result.should.have.status(200);
+          assert.equal(result.body.name, "Jerry");
           done();
         });
     });
@@ -40,18 +52,21 @@ describe("Mock database functions", function() {
       assert.equal(users.length, 2);
     });
   });
+
   describe("getUser()", function() {
     it("should fetch the requested user", async function() {
       const user = await databaseAccess.getUser(1);
       assert.equal(user.name, "Jerry");
     });
   });
+
   describe("getClasses()", function() {
     it("should fetch all classes", async function() {
       const classes = await databaseAccess.getClasses();
       assert.equal(classes.length, 2);
     });
   });
+
   describe("getClass()", function() {
     it("should fetch the requested class", async function() {
       const thisClass = await databaseAccess.getClass(2);
