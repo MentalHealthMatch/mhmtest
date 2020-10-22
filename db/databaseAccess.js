@@ -1,7 +1,6 @@
 // This is a dummy database access file.
 "use strict";
 
-
 //Both first and last names should be retrievable from any reasonable database in one query
 
 async function getUsers() {
@@ -22,7 +21,7 @@ async function getClasses() {
 
 
 function latency(ms) {
-  return new Promise((doSomething) => setTimeout(doSomething, ms));
+  return new Promise((delayedAction) => setTimeout(delayedAction, ms));
 }
 
 module.exports = { getUsers, getClasses };
