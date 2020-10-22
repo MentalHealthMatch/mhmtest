@@ -37,5 +37,6 @@ function createLastNameLookup(array) {
 }
 
 async function listallclasses(req, res) {
-  res.json(databaseAccess.getAllClasses());
+  let classes = await database.getAllClasses();
+  res.json(classes);
 }
