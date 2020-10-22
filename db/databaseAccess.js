@@ -85,4 +85,4 @@ function latency(ms) {
   return new Promise((delayedAction) => setTimeout(delayedAction, ms));
 }
 
-module.exports = { getUsers, getUser, createUser, getClasses, getClass };
+module.exports = { getUsers, getUser, createUser, getClasses, getClass, createClass };

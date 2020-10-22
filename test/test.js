@@ -105,4 +105,14 @@ describe("Mock database functions", function() {
       assert.equal(thisClass.name, "Calculus");
     });
   });
+
+  describe("createClass()", function() {
+    it("adds a new class to the fake database", async function() {
+      const classParams = { name: "AP US Government" };
+      const priorClasses = await databaseAccess.getClasses();
+      await databaseAccess.createClass(classParams);
+      const newClasses = await databaseAccess.getClasses();
+      assert.equal(newClasses.length, priorClasses.length + 1);
+    });
+  });
 });
