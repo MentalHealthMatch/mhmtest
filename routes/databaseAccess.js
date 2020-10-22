@@ -20,7 +20,7 @@ async function getLastNames() {
 }
 
 function setPromiseTimeout(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise((res) => setTimeout(res, ms));
 }
 
 async function getAllClasses() {
