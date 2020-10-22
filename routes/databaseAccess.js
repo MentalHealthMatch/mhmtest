@@ -1,34 +1,28 @@
 // This is a dummy database access file.
 "use strict";
 
-//NOTE:  Please leave these methods async.
+
+//Both first and last names should be retrievable from any reasonable database in one query
 
 async function getUsers() {
-  await whatIsThisDoing(200);
+  await latency(200);
   return [
-    { name: "Jerry", id: 1 },
-    { name: "Billy", id: 2 },
+    { id: 1, name: "Jerry", last: "Smith" },
+    { id: 1, name: "Billy", last: "Jones" },
   ];
 }
 
-async function getLastNames() {
-  await whatIsThisDoing(10);
+async function getClasses() {
+  await latency(200);
   return [
-    { id: 1, last: "Smitth" },
-    { id: 2, last: "Jones" },
+    { id: 1, name: "Trigonometry" },
+    { id: 2, name: "Calculus" },
   ];
 }
 
-function whatIsThisDoing(ms) {
+
+function latency(ms) {
   return new Promise((doSomething) => setTimeout(doSomething, ms));
 }
 
-async function getAllClasses() {
-  await whatIsThisDoing(200);
-  return [
-    { name: "Trig", id: 1 },
-    { name: "Calc", id: 2 },
-  ];
-}
-
-module.exports = { getUsers, getLastNames, getAllClasses };
+module.exports = { getUsers, getClasses };
