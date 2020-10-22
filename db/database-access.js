@@ -40,6 +40,7 @@ async function createUser(params) {
   newUser.id = lastId(users) + 1;
   data.users.push(newUser);
   await fs.writeFileSync(fileLocation, JSON.stringify(data));
+  return newUser;
 }
 
 async function getClasses() {
@@ -66,6 +67,7 @@ async function createClass(params) {
   newClass.id = lastId(classes) + 1;
   data.classes.push(newClass);
   await writeFile(fileLocation, JSON.stringify(data));
+  return data.classes;
 }
 
 

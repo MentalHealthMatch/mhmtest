@@ -41,6 +41,22 @@ describe("API endpoints", function() {
     });
   });
 
+  describe("POST /users/", function() {
+    it("creates a new user", function(done) {
+      chai.request(app)
+        .post("/users")
+        .send({
+          "name": "Sabrina",
+          "last": "Spellman"
+        })
+        .end((err, result) => {
+          result.should.have.status(200);
+          assert.equal(result.body.length, 3);
+          done();
+        });
+    });
+  });
+
   describe("GET /classes", function() {
     it("fetches all classes", function(done) {
       chai.request(app)
@@ -60,6 +76,21 @@ describe("API endpoints", function() {
         .end((err, result) => {
           result.should.have.status(200);
           assert.equal(result.body.name, "Calculus");
+          done();
+        });
+    });
+  });
+
+  describe("POST /classes/", function() {
+    it("creates a new class", function(done) {
+      chai.request(app)
+        .post("/classes")
+        .send({
+          "name": "AP Computer Science"
+        })
+        .end((err, result) => {
+          result.should.have.status(200);
+          assert.equal(result.body.length, 3);
           done();
         });
     });
