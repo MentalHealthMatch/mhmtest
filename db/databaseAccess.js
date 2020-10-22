@@ -9,16 +9,21 @@
 // to somewhat awkwardly mimic what a real database could accomplish trivially.
 
 const fs = require('fs');
+const util = require('util');
+
+const readFile = util.promisify(fs.readFile);
+const writeFile = util.promisify(fs.writeFile);
+
 const fileLocation = (__dirname + '/mockData.json');
 
 async function getUsers() {
-  let data = JSON.parse(fs.readFileSync(fileLocation));
+  let data = JSON.parse(await readFile(fileLocation));
   await latency(20);
   return data.users;
 }
 
 async function getUser(id) {
-  let data = JSON.parse(fs.readFileSync(fileLocation));
+  let data = JSON.parse(await readFile(fileLocation));
   let users = data.users;
   for (const user of users) {
     if (user.id === id) {
@@ -29,22 +34,22 @@ async function getUser(id) {
 }
 
 async function createUser(params) {
-  let data = JSON.parse(fs.readFileSync(fileLocation));
+  let data = JSON.parse(await readFile(fileLocation));
   let users = data.users;
   let newUser = params;
   newUser.id = lastId(users) + 1;
   data.users.push(newUser);
-  fs.writeFileSync(fileLocation, JSON.stringify(data));
+  await fs.writeFileSync(fileLocation, JSON.stringify(data));
 }
 
 async function getClasses() {
-  let data = JSON.parse(fs.readFileSync(fileLocation));
+  let data = JSON.parse(await readFile(fileLocation));
   await latency(20);
   return data.classes;
 }
 
 async function getClass(id) {
-  let data = JSON.parse(fs.readFileSync(fileLocation));
+  let data = JSON.parse(await readFile(fileLocation));
   let classes = data.classes;
   for (const thisClass of classes) {
     if (thisClass.id === id) {
@@ -52,6 +57,15 @@ async function getClass(id) {
     }
   }
   return undefined;
+}
+
+async function createClass(params) {
+  let data = JSON.parse(await readFile(fileLocation));
+  let classes = data.classes;
+  let newClass = params;
+  newClass.id = lastId(classes) + 1;
+  data.classes.push(newClass);
+  await writeFile(fileLocation, JSON.stringify(data));
 }
 
 
