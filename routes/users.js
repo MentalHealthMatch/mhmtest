@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 const database = require("../db/databaseAccess");
 
-/* GET users listing. */
 router.get('/', getUsers);
 router.get('/:id', getUser);
 
