@@ -9,7 +9,7 @@ const databaseAccess = require('../db/databaseAccess');
 
 describe("API endpoints", function() {
   describe("GET /users", function() {
-    it("should fetch all users", function(done) {
+    it("fetches all users", function(done) {
       chai.request(app)
         .get("/users")
         .end((err, result) => {
@@ -21,7 +21,7 @@ describe("API endpoints", function() {
   });
 
   describe("GET /users/:id", function() {
-    it("should fetch the requested user", function(done) {
+    it("fetches the requested user", function(done) {
       chai.request(app)
         .get("/users/1")
         .end((err, result) => {
@@ -32,13 +32,25 @@ describe("API endpoints", function() {
     });
   });
 
-  describe("GET /listallclasses", function() {
-    it("should fetch all classes", function(done) {
+  describe("GET /classes", function() {
+    it("fetches all classes", function(done) {
       chai.request(app)
-        .get("/listallclasses")
+        .get("/classes")
         .end((err, result) => {
           result.should.have.status(200);
           assert.equal(result.body.length, 2);
+          done();
+        });
+    });
+  });
+
+  describe("GET /classes/:id", function() {
+    it("fetches the requested class", function(done) {
+      chai.request(app)
+        .get("/classes/2")
+        .end((err, result) => {
+          result.should.have.status(200);
+          assert.equal(result.body.name, "Calculus");
           done();
         });
     });
