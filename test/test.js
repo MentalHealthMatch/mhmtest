@@ -3,9 +3,18 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const should = chai.should();
 chai.use(chaiHttp);
+const fs = require('fs');
 
 const app = require('../app');
 const databaseAccess = require('../db/databaseAccess');
+
+//Since we'll be modifying the "database",
+//this hook resets to seed values after execution
+afterEach(function() {
+  const seedData = fs.readFileSync(__dirname + '/seedData.json');
+  fs.writeFileSync(__dirname + '/../db/mockData.json', seedData);
+});
+
 
 describe("API endpoints", function() {
   describe("GET /users", function() {
@@ -57,30 +66,41 @@ describe("API endpoints", function() {
   });
 });
 
+
 describe("Mock database functions", function() {
   describe("getUsers()", function() {
-    it("should fetch all users", async function() {
+    it("fetches all users", async function() {
       const users = await databaseAccess.getUsers();
       assert.equal(users.length, 2);
     });
   });
 
   describe("getUser()", function() {
-    it("should fetch the requested user", async function() {
+    it("fetches the requested user", async function() {
       const user = await databaseAccess.getUser(1);
       assert.equal(user.name, "Jerry");
     });
   });
 
+  describe("createUser()", function() {
+    it("adds a new user to the fake database", async function() {
+      const userParams = { name: "Test", last: "User" };
+      const priorUsers = await databaseAccess.getUsers();
+      await databaseAccess.createUser(userParams);
+      const newUsers = await databaseAccess.getUsers();
+      assert.equal(newUsers.length, priorUsers.length + 1);
+    });
+  });
+
   describe("getClasses()", function() {
-    it("should fetch all classes", async function() {
+    it("fetches all classes", async function() {
       const classes = await databaseAccess.getClasses();
       assert.equal(classes.length, 2);
     });
   });
 
   describe("getClass()", function() {
-    it("should fetch the requested class", async function() {
+    it("fetches the requested class", async function() {
       const thisClass = await databaseAccess.getClass(2);
       assert.equal(thisClass.name, "Calculus");
     });

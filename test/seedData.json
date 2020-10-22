@@ -1,0 +1,10 @@
+{
+	"users": [
+		{ "id": 1, "name": "Jerry", "last": "Smith" },
+		{ "id": 2, "name": "Billy", "last": "Jones" }
+	],
+	"classes": [
+		{ "id": 1, "name": "Trigonometry" },
+		{ "id": 2, "name": "Calculus" }
+	]
+}
