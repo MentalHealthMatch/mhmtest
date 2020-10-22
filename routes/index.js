@@ -8,9 +8,9 @@ router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
 
-router.get("/listAllUsers", processAllUsers);
+router.get("/api/v1/users", processAllUsers);
 
-router.get("/listallclasses", listallclasses);
+router.get("/api/v1/classes", processAllClasses);
 
 module.exports = router;
 
@@ -36,6 +36,6 @@ function createLastNameLookup(array) {
   return returnValue;
 }
 
-async function listallclasses(req, res) {
-  res.json(databaseAccess.getAllClasses());
+async function processAllClasses(req, res) {
+  res.json(await databaseAccess.getAllClasses());
 }
