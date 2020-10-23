@@ -57,7 +57,7 @@ describe("API endpoints", function() {
     });
   });
 
-  describe("PUT /users/", function() {
+  describe("PUT /users/:id", function() {
     it("updates an existing user", function(done) {
       chai.request(app)
       .put("/users/1")
@@ -72,7 +72,7 @@ describe("API endpoints", function() {
     });
   });
 
-  describe("DELETE /users/", function() {
+  describe("DELETE /users/:id", function() {
     it("destroys an existing user", function(done) {
       chai.request(app)
       .delete("/users/1")
@@ -122,7 +122,35 @@ describe("API endpoints", function() {
         });
     });
   });
+
+  describe("PUT /classes/:id", function() {
+    it("updates an existing class", function(done) {
+      chai.request(app)
+      .put("/classes/2")
+      .send({
+        "name": "Differential Calculus"
+      })
+      .end((err, result) => {
+        result.should.have.status(200);
+        assert.equal(result.body.name, "Differential Calculus");
+        done();
+      });
+    });
+  });
+
+  describe("DELETE /classes/:id", function() {
+    it("destroys an existing class", function(done) {
+      chai.request(app)
+      .delete("/classes/1")
+      .end((err, result) => {
+        result.should.have.status(200);
+        assert.equal(result.body.length, 1);
+        done();
+      });
+    });
+  });
 });
+
 
 
 describe("Mock database functions", function() {
@@ -189,6 +217,24 @@ describe("Mock database functions", function() {
       await databaseAccess.createClass(classParams);
       const newClasses = await databaseAccess.getClasses();
       assert.equal(newClasses.length, priorClasses.length + 1);
+    });
+  });
+
+  describe("updateClass()", function() {
+    it("updates the given class with the given params", async function() {
+      const classParams = { id: "1", name: "Math Analysis" };
+      const newclass = await databaseAccess.updateClass(classParams);
+      const updatedClass = await databaseAccess.getClass(1);
+      assert.equal(updatedClass.name, "Math Analysis");
+    });
+  });
+
+  describe("destroyClass()", function() {
+    it("destroys the given class", async function() {
+      const priorClasses = await databaseAccess.getClasses();
+      await databaseAccess.destroyClass(2);
+      const newClasses = await databaseAccess.getClasses();
+      assert.equal(newClasses.length, priorClasses.length - 1);
     });
   });
 });

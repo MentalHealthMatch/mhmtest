@@ -102,6 +102,38 @@ async function createClass(params) {
   return data.classes;
 }
 
+async function updateClass(params) {
+  let data = JSON.parse(await readFile(fileLocation));
+  let classes = data.classes;
+  params.id = parseInt(params.id);
+  let classToUpdate = classes.find(thisClass => thisClass.id == params.id);
+  if (classToUpdate) {
+    classToUpdate = { ...classToUpdate, ...params };
+    classes = classes.map(thisClass => {
+        if (thisClass.id == classToUpdate.id) {
+          return classToUpdate;
+        }
+        else { return thisClass; }
+      }
+    );
+  }
+  data.classes = classes;
+  await writeFile(fileLocation, JSON.stringify(data));
+  return classToUpdate;
+}
+
+async function destroyClass(id) {
+  let data = JSON.parse(await readFile(fileLocation));
+  let classes = data.classes;
+  let classToDestroy = classes.find(thisClass => thisClass.id == id);
+  if (classToDestroy) {
+    classes = classes.filter(thisClass => thisClass !== classToDestroy);
+  }
+  data.classes = classes;
+  await writeFile(fileLocation, JSON.stringify(data));
+  return classes;
+}
+
 
 //A real database would auto-increment its primary key
 function lastId(table) {
@@ -121,5 +153,5 @@ function latency(ms) {
 
 module.exports = { 
   getUsers, getUser, createUser, updateUser, destroyUser, 
-  getClasses, getClass, createClass 
+  getClasses, getClass, createClass, updateClass, destroyClass
 };
