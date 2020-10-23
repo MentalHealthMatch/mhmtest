@@ -1,7 +1,7 @@
 {
 	"users": [
-		{ "id": 1, "name": "Jerry", "last": "Smith" },
-		{ "id": 2, "name": "Billy", "last": "Jones" }
+		{ "id": 1, "firstName": "Jerry", "lastName": "Smith" },
+		{ "id": 2, "firstName": "Billy", "lastName": "Jones" }
 	],
 	"classes": [
 		{ "id": 1, "name": "Trigonometry" },

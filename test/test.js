@@ -35,7 +35,7 @@ describe("API endpoints", function() {
         .get("/users/1")
         .end((err, result) => {
           result.should.have.status(200);
-          assert.equal(result.body.name, "Jerry");
+          assert.equal(result.body.firstName, "Jerry");
           done();
         });
     });
@@ -46,8 +46,8 @@ describe("API endpoints", function() {
       chai.request(app)
         .post("/users")
         .send({
-          "name": "Sabrina",
-          "last": "Spellman"
+          "firstName": "Sabrina",
+          "lastName": "Spellman"
         })
         .end((err, result) => {
           result.should.have.status(200);
@@ -62,11 +62,11 @@ describe("API endpoints", function() {
       chai.request(app)
       .put("/users/1")
       .send({
-        "name": "Ben"
+        "firstName": "Ben"
       })
       .end((err, result) => {
         result.should.have.status(200);
-        assert.equal(result.body.name, "Ben");
+        assert.equal(result.body.firstName, "Ben");
         done();
       });
     });
@@ -164,13 +164,13 @@ describe("Mock database functions", function() {
   describe("getUser()", function() {
     it("fetches the requested user", async function() {
       const user = await databaseAccess.getUser(1);
-      assert.equal(user.name, "Jerry");
+      assert.equal(user.firstName, "Jerry");
     });
   });
 
   describe("createUser()", function() {
     it("adds a new user to the fake database", async function() {
-      const userParams = { name: "Test", last: "User" };
+      const userParams = { firstName: "Test", lastName: "User" };
       const priorUsers = await databaseAccess.getUsers();
       await databaseAccess.createUser(userParams);
       const newUsers = await databaseAccess.getUsers();
@@ -180,10 +180,10 @@ describe("Mock database functions", function() {
 
   describe("updateUser()", function() {
     it("updates the given user with the given params", async function() {
-      const userParams = { id: "1", name: "Ben" };
+      const userParams = { id: "1", firstName: "Ben" };
       const newUser = await databaseAccess.updateUser(userParams);
       const updatedUser = await databaseAccess.getUser(1);
-      assert.equal(updatedUser.name, "Ben");
+      assert.equal(updatedUser.firstName, "Ben");
     });
   });
 
