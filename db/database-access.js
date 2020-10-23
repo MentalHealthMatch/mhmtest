@@ -39,8 +39,40 @@ async function createUser(params) {
   let newUser = params;
   newUser.id = lastId(users) + 1;
   data.users.push(newUser);
-  await fs.writeFileSync(fileLocation, JSON.stringify(data));
+  await writeFile(fileLocation, JSON.stringify(data));
   return newUser;
+}
+
+async function updateUser(params) {
+  let data = JSON.parse(await readFile(fileLocation));
+  let users = data.users;
+  params.id = parseInt(params.id);
+  let userToUpdate = users.find(user => user.id == params.id);
+  if (userToUpdate) {
+    userToUpdate = { ...userToUpdate, ...params };
+    users = users.map(user => {
+        if (user.id == userToUpdate.id) {
+          return userToUpdate;
+        }
+        else { return user; }
+      }
+    );
+  }
+  data.users = users;
+  await writeFile(fileLocation, JSON.stringify(data));
+  return userToUpdate;
+}
+
+async function destroyUser(id) {
+  let data = JSON.parse(await readFile(fileLocation));
+  let users = data.users;
+  let userToDestroy = users.find(user => user.id == id);
+  if (userToDestroy) {
+    users = users.filter(user => user !== userToDestroy);
+  }
+  data.users = users;
+  await writeFile(fileLocation, JSON.stringify(data));
+  return users;
 }
 
 async function getClasses() {
@@ -87,4 +119,7 @@ function latency(ms) {
   return new Promise((delayedAction) => setTimeout(delayedAction, ms));
 }
 
-module.exports = { getUsers, getUser, createUser, getClasses, getClass, createClass };
+module.exports = { 
+  getUsers, getUser, createUser, updateUser, destroyUser, 
+  getClasses, getClass, createClass 
+};

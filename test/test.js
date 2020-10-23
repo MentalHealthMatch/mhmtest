@@ -57,6 +57,33 @@ describe("API endpoints", function() {
     });
   });
 
+  describe("PUT /users/", function() {
+    it("updates an existing user", function(done) {
+      chai.request(app)
+      .put("/users/1")
+      .send({
+        "name": "Ben"
+      })
+      .end((err, result) => {
+        result.should.have.status(200);
+        assert.equal(result.body.name, "Ben");
+        done();
+      });
+    });
+  });
+
+  describe("DELETE /users/", function() {
+    it("destroys an existing user", function(done) {
+      chai.request(app)
+      .delete("/users/1")
+      .end((err, result) => {
+        result.should.have.status(200);
+        assert.equal(result.body.length, 1);
+        done();
+      });
+    });
+  });
+
   describe("GET /classes", function() {
     it("fetches all classes", function(done) {
       chai.request(app)
@@ -120,6 +147,24 @@ describe("Mock database functions", function() {
       await databaseAccess.createUser(userParams);
       const newUsers = await databaseAccess.getUsers();
       assert.equal(newUsers.length, priorUsers.length + 1);
+    });
+  });
+
+  describe("updateUser()", function() {
+    it("updates the given user with the given params", async function() {
+      const userParams = { id: "1", name: "Ben" };
+      const newUser = await databaseAccess.updateUser(userParams);
+      const updatedUser = await databaseAccess.getUser(1);
+      assert.equal(updatedUser.name, "Ben");
+    });
+  });
+
+  describe("destroyUser()", function() {
+    it("destroys the given user", async function() {
+      const priorUsers = await databaseAccess.getUsers();
+      await databaseAccess.destroyUser(2);
+      const newUsers = await databaseAccess.getUsers();
+      assert.equal(newUsers.length, priorUsers.length - 1);
     });
   });
 
