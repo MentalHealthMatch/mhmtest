@@ -11,7 +11,7 @@ we'd like to get a sense of your style.  The structure is lame too.  If you want
 
 There are two core tasks:
 
-1). the code that services "/listAllUsers" is awful and needs to be refactored
+1). The "/listAllUsers" route is amazing.  Could it be even more amazing tho?
 
 2). "/listallclasses" is broken and needs to be fixed.
 

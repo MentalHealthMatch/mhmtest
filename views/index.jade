@@ -1,5 +1,10 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  nav(style="background: #DDD; height: 1in; width: 100%;")
+
+  h2
+    a(href='/classes/list') Classes List
+
+  h2
+    a(href='/users/list') Users List
