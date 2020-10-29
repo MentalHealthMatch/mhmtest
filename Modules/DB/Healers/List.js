@@ -2,13 +2,19 @@
 
 
 module.exports = async function () {
-	console.log ("????");
-
 	return new Promise (Resolve => {
 		Resolve ([
 			{
-				Handle: "B",
-				Name: "Bryan Grace"
+				Motif: "W",
+				Name: "Cavika Has"
+			},
+			{
+				Motif: "1",
+				Name: "Jerry Smitth"
+			},
+			{
+				Motif: "2",
+				Name: "Billy Jones"
 			}
 		]);
 	});

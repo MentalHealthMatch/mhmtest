@@ -11,7 +11,7 @@ router.get ("/", function(req, res, next) {
 	});
 });
 
-router.get ("/Sessions", async function (req, res) {
+router.get ("/*/Sessions", async function (req, res) {
 	var Sessions = await require ("DB/Sessions/List") ();
 
 	res.render ("Sessions", {
@@ -21,7 +21,7 @@ router.get ("/Sessions", async function (req, res) {
 	});
 });
 
-router.get ("/Healers", async function (req, res) {
+router.get ("/*/Healers", async function (req, res) {
 	var Healers = await require ("DB/Healers/List") ();
 
 	res.render ("Healers", {

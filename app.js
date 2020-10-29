@@ -15,14 +15,16 @@ app.set ('view engine', 'ejs');
 app.use (express.json ());
 app.use (express.urlencoded ({ extended: false }));
 app.use (cookieParser ());
-app.use (express.static (path.join (__dirname, 'Public')));
+app.use ("/&", express.static (
+	path.join (__dirname, 'Public'))
+);
 
 app.use ('/', require('Routes/First'));
 app.use ('/Healers', require('Routes/Healers'));
 app.use ('/Sessions', require('Routes/Sessions'));
 app.use ('/', require('Routes/Last'));
 
-app.get ("/:Healer", (req, res, next) => {
+app.get ("/:Name/:Motif", (req, res, next) => {
 
 	res.end ();
 });
