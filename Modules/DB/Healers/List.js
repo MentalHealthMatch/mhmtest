@@ -5,16 +5,16 @@ module.exports = async function () {
 	return new Promise (Resolve => {
 		Resolve ([
 			{
-				Motif: "W",
+				Motif: "Walk",
 				Name: "Cavika Has"
 			},
 			{
-				Motif: "1",
-				Name: "Jerry Smitth"
+				Motif: "Fun",
+				Name: "Veli Sazio"
 			},
 			{
-				Motif: "2",
-				Name: "Billy Jones"
+				Motif: "Raven",
+				Name: "Jan Coover"
 			}
 		]);
 	});
