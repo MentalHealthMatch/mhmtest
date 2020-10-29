@@ -1,0 +1,20 @@
+<html>
+<head>
+<title><%= Tab %></title>
+<%- include('Components/Styles'); -%>
+<style>
+	.Healer {
+		font-size: 1.5rem;
+	}
+</style>
+</head>
+<body>
+	<%- include('Components/Nav'); -%>
+
+	<main>
+	<% Healers.forEach (function (Healer) { %>
+		<a href="/<%= Healer.Handle %>" class="Healer"><%= Healer.Name %></div>
+	<% }); %>
+	</main>
+</body>
+</html>

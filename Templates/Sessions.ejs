@@ -1,0 +1,21 @@
+<html>
+<head>
+	<title><%= Tab %></title>
+	<%- include('Components/Styles'); -%>
+	<style>
+		.Session {
+			display: block;
+			font-size: 1.5rem;
+		}
+	</style>
+</head>
+<body>
+	<%- include('Components/Nav'); -%>
+
+	<main>
+	<% Sessions.forEach (function (Session) { %>
+		<a href="/Sessions/<%= Session.Name %>" class="Session"><%= Session.Name %></div>
+	<% }); %>
+	</main>
+</body>
+</html>
