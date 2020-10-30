@@ -36,6 +36,7 @@ function createLastNameLookup(array) {
   return returnValue;
 }
 
+//this function was missing the await function that was needed
 async function listallclasses(req, res) {
-  res.json(databaseAccess.getAllClasses());
+  res.json( await databaseAccess.getAllClasses());
 }
