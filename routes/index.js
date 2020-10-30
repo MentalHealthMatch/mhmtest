@@ -8,35 +8,42 @@ router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
 
-router.get("/listAllUsers", processAllUsers);
 
+
+//routes for users
+router.get("/listAllUsers", processAllUsers);
+//routes for classes
 router.get("/listallclasses", listallclasses);
 
-module.exports = router;
 
-async function processAllUsers(req, res) {
-  let stuff = await database.getUsers();
-  for (let i = 0; i < stuff.length; i++) {
-    const next = stuff[i];
-    let lastNames = await database.getLastNames();
-    const lastNameLookup = createLastNameLookup(lastNames);
-    const nextId = next.id;
-    const last = lastNameLookup[nextId];
-    next.last = last;
-  }
-  res.json(stuff);
-}
-
+//last name lookup function
+//removed excess variables
 function createLastNameLookup(array) {
   const returnValue = {};
   for (let i = 0; i < array.length; i++) {
-    const next = array[i];
-    returnValue[next.id] = next.last;
+    returnValue[array[i].id] = array[i].last;
   }
   return returnValue;
 }
 
-//this function was missing the await function that was needed
+
+//removed excesss variables and code
+async function processAllUsers(req, res) {
+  let stuff = await database.getUsers();
+  let lastNames = await database.getLastNames();
+  const lastNameLookup = createLastNameLookup(lastNames);
+  for (let i = 0; i < stuff.length; i++) {
+   stuff[i].last = lastNameLookup[stuff[i].id];
+  }
+  res.json(stuff);
+}
+
+
+
+//function was missing the await keyword
 async function listallclasses(req, res) {
   res.json( await databaseAccess.getAllClasses());
 }
+
+
+module.exports = router;
