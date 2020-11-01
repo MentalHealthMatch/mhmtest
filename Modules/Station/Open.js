@@ -4,44 +4,55 @@ module.exports = function ({
 	Port,
 	Locations
 }){
-	var app = require ('express') ();
+	var express = require ('express');
+	var Station = require ('express') ();
 
-	app.set ('views', Locations.Templates);
-	app.set ('view engine', 'ejs');
+	Station.set ('views', Locations.Templates);
+	Station.set ('view engine', 'ejs');
 
-	app.use (require ('express').json ());
-	app.use (require ('express').urlencoded ({ extended: false }));
-	app.use (require ('cookie-parser') ());
-	app.use ("/&", require ('express').static (
+	Station.use (require ('express').json ());
+	Station.use (require ('express').urlencoded ({ extended: false }));
+	Station.use (require ('cookie-parser') ());
+	Station.use ("/&", express.static (
 		Locations.Public
 	));
 
+	console.log ({
+		Public: Locations.Public
+	})
+
+	Station.all ('*', function (req, res, next) {
+		console.log ("[URL]", req.method, req.url);
+
+
+		next ();
+	});
+
 	require ("Routes/Load") ({
 		Routes: require ("Routes"),
-		App: app
+		App: Station
+	});
+
+	Station.all ('*', function (req, res, next) {
+		res.statusCode = 404;
+		res.write ("not found");
+		res.end ();
 	});
 
 	// catch 404 and forward to error handler
-	app.use (function (req, res, next) {
+	Station.use (function (req, res, next) {
 		next (require ('http-errors') (404));
 	});
 
 	// error handler
-	app.use (function (err, req, res, next) {
+	Station.use (function (err, req, res, next) {
 		console.error (err);
 
 		res.status (err.status || 500);
 		res.end ();
 	});
 
-	var Port = process.env.PORT || '3000';
-
-	var Station = require ('http').createServer (app);
-	Station.listen (Port);
-	Station.on ('error', function (error) {
-		throw error;
-	});
-	Station.on ('listening', function () {
-		console.log ('The station is open on port ' + Station.address ().port);
+	Station.listen (Port, () => {
+		console.log (`Station open at http://localhost:${ Port }`);
 	});
 }

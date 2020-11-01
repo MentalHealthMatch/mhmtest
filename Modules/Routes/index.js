@@ -7,6 +7,7 @@ var Routes = [{
 			Tab: "🌴 Pacalmo",
 			Title: "Pacalmo"
 		});
+		res.end ();
 	}
 },{
 	Pattern: "/*/Sessions",
@@ -22,18 +23,43 @@ var Routes = [{
 		});
 	}
 },{
-	Pattern: "/*/Sessions/:Session",
+	Pattern: "/*/Sessions/:Name/:Motif",
 	Match: async ({ req, res, next }) => {
-		var Session = require ("lodash/get") (req, [ "params", "Session" ], "?");
+		var Name = require ("lodash/get") (req, [ "params", "Name" ], null);
+		if (Name === null) {
+			res.render ("Session-not-found", {
+				Tab: "Session not found",
+				Title: "Pacalmo"
+			});
+			return;
+		}
 
-		var Sessions = await require ("DB/Sessions/List") ();
+		var Motif = require ("lodash/get") (req, [ "params", "Motif" ], null);
+		if (Motif === null) {
+			res.render ("Session-not-found", {
+				Tab: "Session not found",
+				Title: "Pacalmo"
+			});
+			return;
+		}
 
-		console.log ({ Sessions });
+		var Session = await require ("DB/Sessions/Find") ({
+			Name,
+			Motif
+		});
 
-		res.render ("Sessions", {
-			Tab: "🌴 Pacalmo 🌼 Sessions",
+		if (Session === null) {
+			res.render ("Session-not-found", {
+				Tab: "Session not found",
+				Title: "Pacalmo"
+			});
+			return;
+		}
+
+		res.render ("Session", {
+			Tab: `🌼 ${ Name }`,
 			Title: "Pacalmo",
-			Sessions
+			Session
 		});
 	}
 },{
@@ -47,17 +73,47 @@ var Routes = [{
 			Healers
 		});
 	}
-},{
+},
+{
 	Pattern: "/:Name/:Motif",
 	Match: async ({ req, res, next }) => {
-		var Healers = await require ("DB/Healers/List") ();
+		var Name = require ("lodash/get") (req, [ "params", "Name" ], null);
+		if (Name === null) {
+			res.render ("Healer-not-found", {
+				Tab: "Healer not found",
+				Title: "Pacalmo"
+			});
+			return;
+		}
+
+		var Motif = require ("lodash/get") (req, [ "params", "Motif" ], null);
+		if (Motif === null) {
+			res.render ("Healer-not-found", {
+				Tab: "Healer not found",
+				Title: "Pacalmo"
+			});
+			return;
+		}
+
+		var Healer = await require ("DB/Healers/Find") ({
+			Name,
+			Motif
+		});
+		if (Healer === null) {
+			res.render ("Healer-not-found", {
+				Tab: "Healer not found",
+				Title: "Pacalmo"
+			});
+			return;
+		}
 
 		res.render ("Healer", {
-			Tab: `?`,
+			Tab: `✨ ${ Name }`,
 			Title: "Pacalmo",
-			Healers
+			Healer
 		});
 	}
-}]
+}
+]
 
 module.exports = Routes;

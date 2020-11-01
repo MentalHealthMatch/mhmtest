@@ -4,16 +4,23 @@
 <%- include('Components/Styles'); -%>
 <style>
 	.Healer {
+		padding: .125in 0;
+
 		font-size: 1.5rem;
+
 	}
 </style>
 </head>
 <body>
 	<%- include('Components/Nav'); -%>
 
+
+
 	<main>
 	<% Healers.forEach (function (Healer) { %>
-		<a href="/<%= Healer.Name %>/<%= Healer.Motif %>" class="Healer"><%= Healer.Name %></div>
+		<div class="Healer">
+			<a href="/<%= Healer.Name %>/<%= Healer.Motif %>"><%= Healer.Name %></a>
+		</div>
 	<% }); %>
 	</main>
 </body>
