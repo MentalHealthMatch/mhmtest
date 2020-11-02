@@ -5,7 +5,9 @@ var Routes = [{
 	Match: ({ req, res, next }) => {
 		res.render ("Home", {
 			Tab: "🌴 Pacalmo",
-			Title: "Pacalmo"
+			Settings: JSON.stringify ({
+				Title: "Pacalmo"
+			})
 		});
 		res.end ();
 	}

@@ -4,13 +4,11 @@
 <%- include('Components/Styles'); -%>
 </head>
 <body>
-	<%- include('Components/Nav'); -%>
+	<div id="Home"></div>
 
-	<main>
-		<h2><a href='/*/Sessions'>Sessions</a></h2>
-		<h2><a href='/*/Healers'>Healers</a></h2>
-	</main>
-
-	<script src="/&/Scripts/Home.js"></script>
+	<script>
+		window.Settings = <%- Settings %>;
+	</script>
+	<script src="/&/Scripts/Entry-Client.js"></script>
 </body>
 </html>
