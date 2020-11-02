@@ -2,7 +2,7 @@
 var Stack = require ("path").resolve (__dirname, "../..");
 
 var Climate = {
-	Port: 3000,
+	Port: 80,
 	Locations: {
 		Templates: require ("path").resolve (Stack, "Templates"),
 		Public: require ("path").resolve (Stack, "Public")
