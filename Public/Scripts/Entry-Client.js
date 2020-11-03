@@ -15,9 +15,10 @@
   \******************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module */
+/*! CommonJS bailout: module.exports is used directly at 3:0-14 */
 /***/ ((module) => {
 
-eval("\n\nmodule.exports = ({ Vue }) => {\n    const App = new Vue ({\n        // el: '#Home',\n        // data: {\n        //     Title: Settings.Title\n        // },\n        template: `<div>APP?</div>`\n    });\n\n    return {\n        App\n    };\n}\n\n\n//# sourceURL=webpack:///./Modules/App/index.js?");
+eval("\n\nmodule.exports = ({ Vue, Settings }) => {\n    const App = new Vue ({\n        data: {\n            Title: Settings.Title,\n\t\t\tStyles: {\n\t\t\t\tNav: {\n\t\t\t\t\tdisplay: \"table\",\n\n\t\t\t\t\t\"box-sizing\": \"border-box\",\n\t\t\t\t\theight: \"1in\",\n\t\t\t\t\twidth: \"100%\",\n\n\t\t\t\t\tbackground: \"#DDD\"\n\t\t\t\t},\n\t\t\t\tA: {\n\t\t\t\t\tdisplay: \"table-cell\",\n\n\t\t\t\t\t\"vertical-align\": \"middle\",\n\t\t\t\t\t\"text-align\": \"center\",\n\n\t\t\t\t\theight: \"1in\",\n\t\t\t\t\twidth: \"100%\",\n\n\t\t\t\t\t\"font-size\": \"3rem\",\n\t\t\t\t\t\"font-family\": \"Ontel\"\n\t\t\t\t}\n\t\t\t}\n        },\n        template: `\n\t\t<div>\n\t\t\t<nav :style=\"Styles.Nav\">\n\t\t\t\t<a href=\"/\" :style=\"Styles.A\">\n\t\t\t\t{{ Title }}\n\t\t\t\t</a>\n\t\t\t</nav>\n\t\t</div>\n\t\t`,\n\t\tmounted: () => {\n\t\t\tconsole.log (\"mounted\");\n\t\t}\n    });\n\n    return {\n        App\n    };\n}\n\n\n//# sourceURL=webpack:///./Modules/App/index.js?");
 
 /***/ }),
 
@@ -109,7 +110,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \**************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: __webpack_require__ */
-eval("\n\n// import { createApp } from 'App';\n\n// client-specific bootstrapping logic...\n\n// const { app } = createApp ()\n\n// require (\"vue/dist/vue.js\");\nvar Vue = __webpack_require__(/*! vue/dist/vue.esm.js */ \"./node_modules/vue/dist/vue.esm.js\").default;\n\nvar { App } = __webpack_require__ (/*! App */ \"./Modules/App/index.js\") ({ Vue });\n//\n// // this assumes App.vue template root element has `id=\"app\"`\nApp.$mount ('#Home');\n\n\n//# sourceURL=webpack:///./Entry_points/Entry-Client.js?");
+eval("\n\n\nvar Vue = __webpack_require__(/*! vue/dist/vue.esm.js */ \"./node_modules/vue/dist/vue.esm.js\").default;\n\nvar Settings = window.Settings;\nvar { App } = __webpack_require__ (/*! App */ \"./Modules/App/index.js\") ({\n\tVue,\n\tSettings\n});\n\nApp.$mount ('#Home');\n\n\n//# sourceURL=webpack:///./Entry_points/Entry-Client.js?");
 })();
 
 /******/ })()

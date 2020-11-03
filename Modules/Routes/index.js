@@ -3,13 +3,37 @@
 var Routes = [{
 	Pattern: "/",
 	Match: ({ req, res, next }) => {
-		res.render ("Home", {
-			Tab: "🌴 Pacalmo",
-			Settings: JSON.stringify ({
+		require ("axios")
+		.post (`http://127.0.0.1:3001`, {
+			Settings: {
 				Title: "Pacalmo"
-			})
+			}
+		})
+		.then (Response => {
+			console.log (Response.data);
+			var HTML = require ("lodash/get") (Response, "data", "");
+
+			console.log ({ HTML });
+
+			res.render ("Home", {
+				Tab: "🌴 Pacalmo",
+				Settings: JSON.stringify ({
+					Title: "Pacalmo"
+				}),
+				Content: HTML
+			});
+			res.end ();
+
+			// res.statusCode = 200;
+			// res.write (HTML);
+			// res.end ();
+		})
+		.catch (Throw => {
+			console.log ({ Throw });
+
+			res.statusCode = 500;
+			res.end ();
 		});
-		res.end ();
 	}
 },{
 	Pattern: "/*/Sessions",
