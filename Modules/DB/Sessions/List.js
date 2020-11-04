@@ -13,7 +13,8 @@ module.exports = async function () {
 				Motif: "H"
 			},
 			{
-				Name: "Tranquility and Happiness"
+				Name: "Tranquility and Happiness",
+				Motif: "Y"
 			}
 		]);
 	});
