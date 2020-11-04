@@ -1,6 +1,6 @@
 
 function NotFound ({ Name, OnlySettings, req, res }) {
-	if (OnlySettings === "yes") {
+	if (OnlySettings) {
 		res.statusCode = 404;
 		res.write (JSON.stringify ({}));
 		res.end ();
@@ -24,7 +24,9 @@ module.exports = {
 	Match: async ({ req, res, next }) => {
 		var Name = require ("lodash/get") (req, [ "params", "Name" ], null);
 		var Motif = require ("lodash/get") (req, [ "params", "Motif" ], null);
-		var OnlySettings = require ("lodash/get") (req, [ "headers", "settings" ], false);
+		if (Object.prototype.hasOwnProperty.call (req.query, "JSON")) {
+			var OnlySettings = true;
+		}
 
 		if (Name === null || Motif === null) {
 			NotFound ({ req, res, OnlySettings, Name });
@@ -40,7 +42,7 @@ module.exports = {
 			return;
 		}
 
-		if (OnlySettings === "yes") {
+		if (OnlySettings) {
 			res.statusCode = 200;
 			res.write (JSON.stringify (Healer));
 			res.end ();
