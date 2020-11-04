@@ -1,54 +1,39 @@
 
 
-var Routes = [{
+var Routes = [
+{
 	Pattern: "/",
 	Match: ({ req, res, next }) => {
-		require ("axios")
-		.post (`http://127.0.0.1:3001`, {
-			Settings: {
-				Title: "Pacalmo"
-			}
-		})
-		.then (Response => {
-			console.log (Response.data);
-			var HTML = require ("lodash/get") (Response, "data", "");
-
-			console.log ({ HTML });
-
-			res.render ("Home", {
-				Tab: "🌴 Pacalmo",
-				Settings: JSON.stringify ({
-					Title: "Pacalmo"
-				}),
-				Content: HTML
-			});
-			res.end ();
-
-			// res.statusCode = 200;
-			// res.write (HTML);
-			// res.end ();
-		})
-		.catch (Throw => {
-			console.log ({ Throw });
-
-			res.statusCode = 500;
-			res.end ();
+		require ("Render/Vue") ({
+			req,
+			res
 		});
 	}
-},{
+},
+{
 	Pattern: "/*/Sessions",
 	Match: async ({ req, res, next }) => {
-		var Sessions = await require ("DB/Sessions/List") ();
+		const Sessions = await require ("DB/Sessions/List") ();
 
-		console.log ({ Sessions });
+		const Headers = req.headers;
+		if (Headers.settings === "yes") {
+			res.statusCode = 200;
+			res.write (JSON.stringify (Healers));
+			res.end ();
+			return;
+		}
 
-		res.render ("Sessions", {
+		require ("Render/Vue") ({
+			req,
+			res,
 			Tab: "🌴 Pacalmo 🌼 Sessions",
-			Title: "Pacalmo",
-			Sessions
+			Settings: {
+				Sessions
+			}
 		});
 	}
-},{
+},
+{
 	Pattern: "/*/Sessions/:Name/:Motif",
 	Match: async ({ req, res, next }) => {
 		var Name = require ("lodash/get") (req, [ "params", "Name" ], null);
@@ -88,15 +73,27 @@ var Routes = [{
 			Session
 		});
 	}
-},{
+},
+{
 	Pattern: "/*/Healers",
 	Match: async ({ req, res, next }) => {
-		var Healers = await require ("DB/Healers/List") ();
+		const Headers = req.headers;
 
-		res.render ("Healers", {
+		var Healers = await require ("DB/Healers/List") ();
+		if (Headers.settings === "yes") {
+			res.statusCode = 200;
+			res.write (JSON.stringify (Healers));
+			res.end ();
+			return;
+		}
+		
+		require ("Render/Vue") ({
+			req,
+			res,
 			Tab: "🌴 Pacalmo ✨ Healers",
-			Title: "Pacalmo",
-			Healers
+			Settings: {
+				Healers
+			}
 		});
 	}
 },
