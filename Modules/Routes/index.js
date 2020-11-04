@@ -33,7 +33,7 @@ var Routes = [
 		});
 	}
 },
-require ("./~/Sessions/:Name/:Motif"),
+require ("./Tilde/Sessions/:Name/:Motif"),
 {
 	Pattern: "/~/Healers",
 	Match: async ({ req, res, next }) => {
