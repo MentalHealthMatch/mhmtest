@@ -4,9 +4,13 @@ const router = express.Router();
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
-  const users = await getAllUsers();
+  try {
+    const users = await getAllUsers();
 
-  res.status(200).json(users);
+    res.status(200).json(users);
+  } catch(error) {
+    res.status(500).json({error});
+  }
 });
 
 /* GET user */
@@ -24,7 +28,6 @@ router.get('/:id', async function(req, res, next) {
   } catch(error) {
     res.status(500).json({error});
   }
-
 });
 
 

@@ -16,7 +16,8 @@ async function getAllUsers() {
 /**
  * 
  * @param {number} id - the id of a user to find
- * @returns {object} - an object with a single user's id, first, and last name
+ * @returns {object|null} - an object with a single user's id, first, and last name
+ *                          or null if user not found
  */
 async function getUserById(id) {
     const users = await getFirstNames();
