@@ -1,7 +1,7 @@
 const express = require("express");
-const databaseAccess = require("./databaseAccess");
+const databaseAccess = require("../db");
 const router = express.Router();
-const database = require("./databaseAccess");
+const database = require("../db");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {

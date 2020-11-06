@@ -1,5 +1,5 @@
 const express = require('express');
-const { getLastNames, getUsers } = require('./databaseAccess');
+const { getAllUsers, getUserById } = require('../utils/userHelpers');
 const router = express.Router();
 
 /* GET users listing. */
@@ -9,29 +9,24 @@ router.get('/', async function(req, res, next) {
   res.status(200).json(users);
 });
 
-/**
- * @returns {array} list of all users, including first and last names
- */
-async function getAllUsers() {
-  const users = await getUsers();
-  for (let i = 0; i < users.length; i++) {
-    const user = users[i];
-    user.lastName = await getLastName(user.id);
+/* GET user */
+router.get('/:id', async function(req, res, next) {
+  try {
+    const { id } = req.params;
+
+    const user = await getUserById(Number(id));
+
+    if(!user){
+      return res.status(404).send("User id not found. Please try again.");
+    }
+
+    res.status(200).json(user);
+  } catch(error) {
+    res.status(500).json({error});
   }
-  
-  return users;
-}
 
-/**
- * 
- * @param {number} id - id of user whose last name we need to find
- * @returns {string} - last name of user
- */
-async function getLastName(id) {
-  const lastNames = await getLastNames();
-  const lastNameRecord = lastNames.filter(record => record.id === id)[0];
+});
 
-  return lastNameRecord.lastName;
-}
+
 
 module.exports = router;

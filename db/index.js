@@ -4,7 +4,7 @@
 //NOTE:  Please leave these methods async.
 
 // returns the first name and id of all users
-async function getUsers() {
+async function getFirstNames() {
   await makeAsync(200);
   return [
     { id: 1, firstName: "Jerry" },
@@ -37,4 +37,8 @@ async function getAllClasses() {
   ];
 }
 
-module.exports = { getUsers, getLastNames, getAllClasses };
+module.exports = { 
+  getFirstNames, 
+  getLastNames, 
+  getAllClasses 
+};
