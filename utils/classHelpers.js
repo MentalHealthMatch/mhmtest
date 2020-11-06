@@ -2,7 +2,7 @@ const {  getAllClasses } = require('../db');
 
 
 /**
- * @returns {array} - an array containing all classes in object form
+ * @returns {Array} - an array containing all classes in object form
  */
 async function getClasses() {
     const classes = await getAllClasses();
@@ -12,7 +12,7 @@ async function getClasses() {
 
 /**
  * @param {number} id
- * @returns {object} - an object containing record for a single class
+ * @returns {Object} - an object containing record for a single class
  */
 async function getClassById(id) {
     const classes = await getAllClasses();

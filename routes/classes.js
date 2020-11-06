@@ -1,9 +1,9 @@
 const express = require('express');
-
 const { getClasses, getClassById } = require('../utils/classHelpers');
 
 const router = express.Router();
 
+// get all classes
 router.get("/", async function(req, res, next){
     try {
         const classes = await getClasses();
@@ -14,6 +14,7 @@ router.get("/", async function(req, res, next){
     }
 });
 
+// get class by id
 router.get("/:id", async function(req, res, next){
     try {
         const { id } = req.params;

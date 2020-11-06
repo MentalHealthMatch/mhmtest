@@ -1,7 +1,7 @@
 const { getLastNames, getFirstNames } = require('../db');
 
 /**
- * @returns {array} list of all users, including first and last names
+ * @returns {Array} list of all users, including first and last names
  */
 async function getAllUsers() {
     const users = await getFirstNames();
@@ -16,8 +16,8 @@ async function getAllUsers() {
 /**
  * 
  * @param {number} id - the id of a user to find
- * @returns {object|null} - an object with a single user's id, first, and last name
- *                          or null if user not found
+ * @returns {(Object|null)} - an object with a single user's id, first, and last name
+ *                            or null if user not found
  */
 async function getUserById(id) {
     const users = await getFirstNames();

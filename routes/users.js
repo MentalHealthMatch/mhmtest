@@ -1,8 +1,9 @@
 const express = require('express');
 const { getAllUsers, getUserById } = require('../utils/userHelpers');
+
 const router = express.Router();
 
-/* GET users listing. */
+// get all users
 router.get('/', async function(req, res, next) {
   try {
     const users = await getAllUsers();
@@ -13,7 +14,7 @@ router.get('/', async function(req, res, next) {
   }
 });
 
-/* GET user */
+// get user by id
 router.get('/:id', async function(req, res, next) {
   try {
     const { id } = req.params;

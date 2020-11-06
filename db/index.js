@@ -3,7 +3,10 @@
 
 //NOTE:  Please leave these methods async.
 
-// returns the first name and id of all users
+/**
+ * @returns {Array} - an array of objects containing the firstName and id for all 
+ *                    users
+ */
 async function getFirstNames() {
   await makeAsync(200);
   return [
@@ -12,7 +15,10 @@ async function getFirstNames() {
   ];
 }
 
-// returns the last name and id of all users
+/**
+ * @returns {Array} - an array of objects containing the lastName and id for all
+ *                    users
+ */
 async function getLastNames() {
   await makeAsync(10);
   return [
@@ -21,20 +27,24 @@ async function getLastNames() {
   ];
 }
 
-// Accepts a time [ms] in milliseconds and returns a promise that will
-// resolve after [ms] time passes. Mimics an async call, such as too a 
-// network
-function makeAsync(ms) {
-  return new Promise((doSomething) => setTimeout(doSomething, ms));
-}
-
-// returns the the name and id of all classes
+/**
+ * @returns {Array} - an array of objects containing the name and id of all classes
+ */
 async function getAllClasses() {
   await makeAsync(200);
   return [
     { name: "Trig", id: 1 },
     { name: "Calc", id: 2 },
   ];
+}
+
+/**
+ * Method to mimic an asyn network call
+ * @param {number} ms - a time in milliseconds
+ * @returns {Promise} - returns a promise that resolves in [ms] time
+ */
+function makeAsync(ms) {
+  return new Promise((doSomething) => setTimeout(doSomething, ms));
 }
 
 module.exports = { 
