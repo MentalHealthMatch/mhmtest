@@ -8,23 +8,23 @@ router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
 
-router.get("/listAllUsers", processAllUsers);
+router.get("/getAllUsers", getAllUsers);
 
-router.get("/listallclasses", listallclasses);
+router.get("/getAllClasses", listallclasses);
 
 module.exports = router;
 
-async function processAllUsers(req, res) {
-  let stuff = await database.getUsers();
-  for (let i = 0; i < stuff.length; i++) {
-    const next = stuff[i];
+async function getAllUsers(req, res) {
+  let users = await database.getUsers();
+  for (let i = 0; i < users.length; i++) {
+    const user = users[i];
     let lastNames = await database.getLastNames();
     const lastNameLookup = createLastNameLookup(lastNames);
     const nextId = next.id;
     const last = lastNameLookup[nextId];
     next.last = last;
   }
-  res.json(stuff);
+  res.json(users);
 }
 
 function createLastNameLookup(array) {
@@ -36,6 +36,6 @@ function createLastNameLookup(array) {
   return returnValue;
 }
 
-async function listallclasses(req, res) {
+async function getAllClasses(req, res) {
   res.json(databaseAccess.getAllClasses());
 }
