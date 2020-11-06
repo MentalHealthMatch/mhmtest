@@ -5,10 +5,10 @@
 
 // returns the first name and id of all users
 async function getUsers() {
-  await makeSync(200);
+  await makeAsync(200);
   return [
-    { name: "Jerry", id: 1 },
-    { name: "Billy", id: 2 },
+    { id: 1, firstName: "Jerry" },
+    { id: 2, firstName: "Billy" },
   ];
 }
 
@@ -16,8 +16,8 @@ async function getUsers() {
 async function getLastNames() {
   await makeAsync(10);
   return [
-    { id: 1, last: "Smitth" },
-    { id: 2, last: "Jones" },
+    { id: 1, lastName: "Smitth" },
+    { id: 2, lastName: "Jones" },
   ];
 }
 
