@@ -1,6 +1,6 @@
-var express = require('express');
+const express = require('express');
 const { getLastNames, getUsers } = require('./databaseAccess');
-var router = express.Router();
+const router = express.Router();
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
@@ -13,7 +13,7 @@ router.get('/', async function(req, res, next) {
  * @returns {array} list of all users, including first and last names
  */
 async function getAllUsers() {
-  let users = await getUsers();
+  const users = await getUsers();
   for (let i = 0; i < users.length; i++) {
     const user = users[i];
     user.lastName = await getLastName(user.id);
