@@ -1,41 +1,41 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const createError = require('http-errors');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const installRoutes = require('./routes');
+const errorHandler = require('./routes/middlewares/error');
 
-var app = express();
+/**
+ * App Variables
+ */
+const app = express();
 
-// view engine setup
+/**
+ *  App Configuration
+ */
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser()); // NOTE: this could be removed (along with the package) as it isn't being used as of now; but I did not remove it because a cookie parser will probably be used when more functionality is added
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+/**
+ * Routes Installation
+ */
+installRoutes(app);
 
-// catch 404 and forward to error handler
+/**
+ * Error Handling Middlewares (Fallback)
+ */
 app.use(function(req, res, next) {
+  // catch all other routes and forward a 404 error to error handler
   next(createError(404));
 });
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+app.use(errorHandler);
 
 module.exports = app;
