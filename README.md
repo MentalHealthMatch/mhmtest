@@ -1,20 +1,14 @@
 # mhmtest
 
-A simple coding test in project form
+Changes Done:
 
-This test is intended to test your basic facility with a Node JS Backend. As such, we're not going to explain much. We'll just say this:
+- Refactor code of listAllUsers
+- Add new APIs for geting single user or class
+- Fix issue in listAllClasses call
 
-Stylistically this is about as bad as we could do on short notice. You are free to fix any things that really annoy you, but those aren't core tasks.
+Application support following APIs
 
-Consider fixing bad name choices.  Feel free to rename methods and even URL paths to things that make sense to you.  There is no right or wrong, but
-we'd like to get a sense of your style.  The structure is lame too.  If you want to move things to different files or folders, go nuts.
-
-There are two core tasks:
-
-1). the code that services "/listAllUsers" is awful and needs to be refactored
-
-2). "/listallclasses" is broken and needs to be fixed.
-
-Beyond this, you're free to add any functionality you think would be interesting for us to see and to get a sense of how you approach coding and problem solving.
-
-When you're done, create a pull request and we'll take a look!
+- /listAllUsers : For getting all users from database
+- /getUser?userid=1 : For getting user of given id from database
+- /listAllClasses : For getting all classes from database
+- /getClass?classid=2 : For getting class of given id from database
