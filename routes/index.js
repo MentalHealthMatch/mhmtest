@@ -1,7 +1,6 @@
 var express = require("express");
 const databaseAccess = require("./databaseAccess");
 var router = express.Router();
-var database = require("./databaseAccess");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -15,10 +14,10 @@ router.get("/listallclasses", listallclasses);
 module.exports = router;
 
 async function processAllUsers(req, res) {
-  let stuff = await database.getUsers();
+  let stuff = await databaseAccess.getUsers();
   for (let i = 0; i < stuff.length; i++) {
     const next = stuff[i];
-    let lastNames = await database.getLastNames();
+    let lastNames = await databaseAccess.getLastNames();
     const lastNameLookup = createLastNameLookup(lastNames);
     const nextId = next.id;
     const last = lastNameLookup[nextId];
