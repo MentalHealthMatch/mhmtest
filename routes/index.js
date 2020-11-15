@@ -14,25 +14,13 @@ router.get("/listallclasses", listallclasses);
 module.exports = router;
 
 async function processAllUsers(req, res) {
-  let stuff = await databaseAccess.getUsers();
-  for (let i = 0; i < stuff.length; i++) {
-    const next = stuff[i];
-    let lastNames = await databaseAccess.getLastNames();
-    const lastNameLookup = createLastNameLookup(lastNames);
-    const nextId = next.id;
-    const last = lastNameLookup[nextId];
-    next.last = last;
-  }
+  const users = await databaseAccess.getUsers();
+  const lastNames = await databaseAccess.getLastNames();
+  const stuff = users.map((user) => ({
+    ...user,
+    last: lastNames.find((lastNameObject) => lastNameObject.id === user.id).last,
+  }));
   res.json(stuff);
-}
-
-function createLastNameLookup(array) {
-  const returnValue = {};
-  for (let i = 0; i < array.length; i++) {
-    const next = array[i];
-    returnValue[next.id] = next.last;
-  }
-  return returnValue;
 }
 
 async function listallclasses(req, res) {
