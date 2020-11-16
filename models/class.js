@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         msg: "Id is already in use!",
       },
     },
-    class: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: false,
