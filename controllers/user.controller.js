@@ -6,11 +6,11 @@ module.exports = {
     try {
       const users = await User.getUsers();
       const lastNames = await User.getLastNames();
-      const stuff = users.map((user) => ({
+      const userList = users.map((user) => ({
         ...user,
         last: lastNames.find((lastNameObject) => lastNameObject.id === user.id).last,
       }));
-      res.json(stuff);
+      res.json(userList);
     } catch (error) {
       next(error);
     }

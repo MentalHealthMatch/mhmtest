@@ -1,4 +1,4 @@
 "use strict";
 
-exports.User = require('./user');
-exports.Class = require('./class');
+exports.User = require("./user");
+exports.Class = require("./class");
