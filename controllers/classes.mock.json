@@ -1,0 +1,12 @@
+{
+  "classes": [
+    {
+      "name": "Trig",
+      "id": 1
+    },
+    {
+      "name": "Calc",
+      "id": 2
+    }
+  ]
+}
