@@ -4,7 +4,7 @@ const User = db.User;
 module.exports = {
   list: async (req, res, next) => {
     try {
-      const users = await User.getUsers();
+      const users = await User.getFirstNames();
       const lastNames = await User.getLastNames();
       const userList = users.map((user) => ({
         ...user,

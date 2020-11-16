@@ -2,11 +2,11 @@ const whatIsThisDoing = (ms) => {
   return new Promise((doSomething) => setTimeout(doSomething, ms));
 };
 
-const getUsers = async () => {
+const getFirstNames = async () => {
   await whatIsThisDoing(200);
   return [
-    { name: "Jerry", id: 1 },
-    { name: "Billy", id: 2 },
+    { first: "Jerry", id: 1 },
+    { first: "Billy", id: 2 },
   ];
 };
 
@@ -18,4 +18,4 @@ const getLastNames = async () => {
   ];
 };
 
-module.exports = { getUsers, getLastNames };
+module.exports = { getFirstNames, getLastNames };
