@@ -5,4 +5,6 @@ const { getClasses } = require("../controllers/classController");
 
 // @route GET
 // @desc get all classes
-router.get("/users", getClasses);
+router.get("/", getClasses);
+
+module.exports = router;
