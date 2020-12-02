@@ -1,5 +1,7 @@
 let users = require("./userData");
-const { v4: uuidv4 } = require("uuid");
+const { v4: uuidv4 } = require("uuid"); //to generate unique id
+
+//controller functions to implement create,read,update,delete functionality on users array
 
 async function getUsers(req, res) {
   try {
@@ -12,6 +14,7 @@ async function getUsers(req, res) {
   }
 }
 
+// getting a user with a matching id
 async function getUser(req, res) {
   const id = +req.params.id;
   const user = users.filter((user) => user.id === id);
@@ -26,9 +29,10 @@ async function getUser(req, res) {
   }
 }
 
+// getting only lastName property from user object.
 async function getUserLastNames(req, res) {
-  const lastNames = users.map((user) => user.lastName);
   try {
+    const lastNames = users.map((user) => user.lastName);
     res.status(200).json(lastNames);
   } catch (err) {
     res.send(500).json({
@@ -38,19 +42,13 @@ async function getUserLastNames(req, res) {
   }
 }
 
+//adding a new user into users array.
 async function addUser(req, res) {
-  const { firstName, lastName } = req.body;
-  const id = uuidv4();
-  const newUser = { id, firstName, lastName };
-  users = [...users, newUser];
-  // console.log(newUsers);
-  res.status(200).json(users);
-}
-
-async function deleteUser(req, res) {
-  const id = +req.params.id;
-  users = users.filter((user) => user.id !== id);
   try {
+    const { firstName, lastName } = req.body;
+    const id = uuidv4(); //getting unique id
+    const newUser = { id, firstName, lastName };
+    users = [...users, newUser];
     res.status(200).json(users);
   } catch (err) {
     res.send(500).json({
@@ -59,12 +57,35 @@ async function deleteUser(req, res) {
     });
   }
 }
+
+//removing matching user from the array.
+async function deleteUser(req, res) {
+  try {
+    const id = +req.params.id;
+    users = users.filter((user) => user.id !== id);
+    res.status(200).json(users);
+  } catch (err) {
+    res.send(500).json({
+      success: false,
+      error: "Server error",
+    });
+  }
+}
+
+//editing matching user info with the requested info.
 async function editUser(req, res) {
-  const id = +req.params.id;
-  const { firstName, lastName } = req.body;
-  const userIndex = users.findIndex((user) => user.id === id);
-  users[userIndex] = { id, firstName, lastName };
-  res.status(200).json(users);
+  try {
+    const id = +req.params.id;
+    const { firstName, lastName } = req.body;
+    const userIndex = users.findIndex((user) => user.id === id);
+    users[userIndex] = { id, firstName, lastName };
+    res.status(200).json(users);
+  } catch (err) {
+    res.send(500).json({
+      success: false,
+      error: "Server error",
+    });
+  }
 }
 
 module.exports = {
